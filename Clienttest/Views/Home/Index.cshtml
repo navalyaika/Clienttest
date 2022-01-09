@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <label>адрес получателя</label>
+    <input type="email" id="email"/>
+    <br />
+    <label>тело сообщения</label>
+    <input type="text" id="message"/>
+    <br />
+    <input type="button" value="отправить" onclick="SendMessage()"/>
+</div>
+
+
+<script type="text/javascript">
+
+    function SendMessage() {
+        let email = document.getElementById('email');
+        let message = document.getElementById('message');
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Home/SendMessageToQueue?email=' + email.value + '&message=' + message.value, true);
+        
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert(xhr.responseText);
+            }
+        }
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        xhr.send();
+    }
+
+</script>
